@@ -1,0 +1,7 @@
+header {
+    display: none !important;
+}
+
+iframe {
+    height: 0px;
+}
