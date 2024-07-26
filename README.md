@@ -1,5 +1,11 @@
 # Oh My Chatty (OMC)
 
+Archived this project after the anyscale integration broke.  Looking
+at contributing to either one of these instead:
+
+- https://github.com/MindWorkAI/AI-Studio
+- https://github.com/huggingface/chat-ui
+
 OMC is a somewhat privacy preserving chatbot that can run in the cloud
 or locally.
 
