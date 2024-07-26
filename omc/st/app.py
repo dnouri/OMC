@@ -32,15 +32,26 @@ def setup_page(config) -> AppContext:
 
 def main():
     setup_page(config={})
+    base_url = os.environ["OPENAI_API_BASE"]
     client = openai.OpenAI(
-        base_url=os.environ["OPENAI_API_BASE"],
+        base_url=base_url,
         api_key=os.environ["OPENAI_API_KEY"],
     )
-    model = "mistralai/Mixtral-8x22B-Instruct-v0.1"
 
-    # Set a default model
-    if "openai_model" not in st.session_state:
-        st.session_state["openai_model"] = model
+    model_options = []
+    if "localhost" in base_url:
+        model_options = [
+            "/app/model",
+        ]
+    else:
+        model_options = [
+            "mistralai/Mixtral-8x22B-Instruct-v0.1",
+            "meta-llama/Meta-Llama-3-8B-Instruct",
+        ]
+    model = st.sidebar.selectbox(
+        "Model",
+        options=model_options,
+    )
 
     # Initialize chat history
     if "messages" not in st.session_state:
@@ -66,7 +77,7 @@ def main():
         # Display assistant response in chat message container
         with st.chat_message("assistant"):
             stream = client.chat.completions.create(
-                model=st.session_state["openai_model"],
+                model=model,
                 messages=[
                     {"role": m["role"], "content": m["content"]}
                     for m in st.session_state.messages
